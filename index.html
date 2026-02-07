@@ -1,125 +1,77 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cover Flow Portfolio</title>
-    <style>
-        /* --- 1. 全局设置 --- */
-        :root {
-            --accent-color: #e09f3e; /* 金色主题 */
-            --bg-color: #121212;     /* 深空灰黑 */
-            --font-main: 'Helvetica Neue', Arial, sans-serif;
-        }
+<nav>
+    <div class="logo">Jason'eye</div>
+    <div class="nav-links">
+        <a href="#home">Home</a>
+        <a href="#photojournal">Photo Journal</a>
+        <a href="#projects">Projects</a>
+    </div>
+</nav>
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+<header id="home">
+    <div class="hero-bg"></div>
+    <h1>FRAGMENTS OF LIGHT</h1>
+    <p>2026 Portfolio</p>
+</header>
 
-        body {
-            background-color: var(--bg-color);
-            color: #eee;
-            font-family: var(--font-main);
-            overflow-x: hidden;
-        }
+<!-- Cover Flow 区域 -->
+<section id="photojournal">
+    <div class="pj-header">
+        <h2 class="pj-title">Photo Journal</h2>
+        <!-- 你要求的日期 -->
+        <span class="pj-date">Feb</span>
+    </div>
 
-        /* --- 2. 导航栏 --- */
-        nav {
-            position: fixed; top: 0; width: 100%; z-index: 1000;
-            padding: 20px 40px; display: flex; justify-content: space-between; align-items: center;
-            background: rgba(18, 18, 18, 0.85); backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-        .logo { font-size: 1.5rem; font-weight: bold; letter-spacing: 2px; color: var(--accent-color); }
-        .nav-links { display: flex; gap: 20px; }
-        .nav-links a { text-decoration: none; color: #fff; transition: 0.3s; }
-        .nav-links a:hover { color: var(--accent-color); }
+    <div class="coverflow-scene" id="scene">
+        <!-- 
+           JS 会自动处理排列。
+           点击图片 -> 如果是中间的图，打开大图。
+           点击图片 -> 如果是旁边的图，把它转到中间。
+        -->
+        
+        <!-- Index 0 (左边) -->
+        <div class="cf-card" onclick="clickCard(0)">
+            <div class="cf-overlay"></div>
+            <img src="images/1.jpg">
+        </div>
 
-        /* --- 3. 首页 (Hero) --- */
-        header {
-            height: 100vh; display: flex; flex-direction: column;
-            justify-content: center; align-items: center; text-align: center;
-            position: relative;
-        }
-        .hero-bg {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url('images/cover.jpg'); /* 封面 */
-            background-size: cover; background-position: center;
-            filter: brightness(0.5); z-index: -1;
-        }
-        header h1 { font-size: 4rem; margin-bottom: 1rem; }
+        <!-- Index 1 (默认C位，你的第二张图) -->
+        <div class="cf-card" onclick="clickCard(1)">
+            <div class="cf-overlay"></div>
+            <img src="images/2.jpg">
+        </div>
 
-        /* --- 4. Cover Flow 核心样式 (iTunes 风格) --- */
-        #photojournal {
-            /* 增大区域高度，留给照片更多空间 */
-            height: 90vh; 
-            display: flex; flex-direction: column; justify-content: center;
-            position: relative;
-            background: linear-gradient(to bottom, #121212 0%, #1a1a1a 100%);
-            overflow: hidden;
-        }
+        <!-- Index 2 (右边) -->
+        <div class="cf-card" onclick="clickCard(2)">
+            <div class="cf-overlay"></div>
+            <img src="images/3.jpg">
+        </div>
 
-        .pj-header {
-            text-align: center; margin-bottom: 20px; position: absolute; top: 40px; width: 100%; z-index: 20;
-        }
-        .pj-title { font-size: 2rem; letter-spacing: 5px; text-transform: uppercase; }
-        .pj-date { 
-            color: var(--accent-color); font-size: 1.2rem; font-weight: bold; 
-            border: 1px solid var(--accent-color); padding: 5px 15px; border-radius: 20px;
-            display: inline-block; margin-top: 10px;
-        }
+        <!-- Index 3 -->
+        <div class="cf-card" onclick="clickCard(3)">
+            <div class="cf-overlay"></div>
+            <img src="images/4.jpg">
+        </div>
 
-        /* 舞台容器 */
-        .coverflow-scene {
-            position: relative;
-            width: 100%;
-            height: 500px; /* 这里的固定高度决定了照片的最大展示高度 */
-            perspective: 1000px; /* 3D透视感 */
-            display: flex; justify-content: center; align-items: center;
-        }
+        <!-- Index 4 -->
+        <div class="cf-card" onclick="clickCard(4)">
+            <div class="cf-overlay"></div>
+            <img src="images/5.jpg">
+        </div>
 
-        /* 单张卡片 */
-        .cf-card {
-            position: absolute;
-            /* 关键：不设固定宽度，由高度和图片比例决定 */
-            height: 400px; /* 调大这里，照片就会变大 */
-            width: auto;
-            
-            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* 丝滑过渡 */
-            cursor: pointer;
-            
-            /* 经典的倒影效果 */
-            -webkit-box-reflect: below 0px linear-gradient(transparent, transparent, rgba(0,0,0,0.3));
-        }
+        <!-- Index 5 -->
+        <div class="cf-card" onclick="clickCard(5)">
+            <div class="cf-overlay"></div>
+            <img src="images/6.jpg">
+        </div>
+    </div>
 
-        .cf-card img {
-            height: 100%; /* 撑满卡片高度 */
-            width: auto;  /* 宽度自适应 */
-            border-radius: 4px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            /* 防止图片被拉伸 */
-            object-fit: contain;
-            background-color: #000;
-        }
+    <div class="cf-controls">
+        <button class="btn-control" onclick="shiftFlow(-1)">Prev</button>
+        <button class="btn-control" onclick="shiftFlow(1)">Next</button>
+    </div>
+</section>
 
-        /* 遮罩层：让侧边的图稍微变暗，增加层次感 */
-        .cf-overlay {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: #000; opacity: 0; transition: opacity 0.5s;
-            pointer-events: none;
-        }
-
-        /* 控制按钮 */
-        .cf-controls {
-            position: absolute; bottom: 40px; width: 100%; text-align: center; z-index: 20;
-        }
-        .btn-control {
-            background: transparent; border: 1px solid #555; color: #fff;
-            padding: 10px 40px; border-radius: 30px; margin: 0 10px; cursor: pointer;
-            transition: 0.3s;
-        }
-        .btn-control:hover { border-color: var(--accent-color); color: var(--accent-color); }
-
-
-        /* --- 5. Projects 样式 --- */
+/* --- 5. Projects 样式 --- */
         #projects { padding: 100px 5%; }
         
         .project-item { 
@@ -158,204 +110,94 @@
             max-width: 90%;       /* 防止文字太长一行读不完 */
         }
 
+<!-- 二级显示弹窗 -->
+<div id="lightbox" class="lightbox-modal" onclick="closeLightbox()">
+    <span class="close-btn">&times;</span>
+    <img class="lightbox-content" id="lightbox-img">
+</div>
 
-        /* --- 6. 二级显示 (Lightbox) --- */
-        .lightbox-modal {
-            display: none; position: fixed; z-index: 9999; top: 0; left: 0;
-            width: 100%; height: 100%; background: rgba(0,0,0,0.95);
-            justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s;
-        }
-        .lightbox-modal.active { display: flex; opacity: 1; }
-        .lightbox-content { max-width: 90%; max-height: 90vh; border: 2px solid var(--accent-color); }
-        .close-btn { position: absolute; top: 30px; right: 40px; color: #fff; font-size: 50px; cursor: pointer; }
-    </style>
-</head>
-<body>
+<script>
+    // --- Cover Flow 逻辑 ---
+    const cards = document.querySelectorAll('.cf-card');
+    
+    // 核心：设置当前显示的图片索引
+    // 0是第一张，1是第二张
+    // 你要求“其实照片是我的第二张照片”，所以这里设为 1
+    let activeIndex = 1; 
 
-    <nav>
-        <div class="logo">MY LENS</div>
-        <div class="nav-links">
-            <a href="#home">Home</a>
-            <a href="#photojournal">Photo Journal</a>
-            <a href="#projects">Projects</a>
-        </div>
-    </nav>
-
-    <header id="home">
-        <div class="hero-bg"></div>
-        <h1>Vision & Light</h1>
-        <p>Feb 2026 Portfolio</p>
-    </header>
-
-    <!-- Cover Flow 区域 -->
-    <section id="photojournal">
-        <div class="pj-header">
-            <h2 class="pj-title">Photo Journal</h2>
-            <!-- 你要求的日期 -->
-            <span class="pj-date">Feb 6</span>
-        </div>
-
-        <div class="coverflow-scene" id="scene">
-            <!-- 
-               JS 会自动处理排列。
-               点击图片 -> 如果是中间的图，打开大图。
-               点击图片 -> 如果是旁边的图，把它转到中间。
-            -->
+    function updateCoverFlow() {
+        cards.forEach((card, index) => {
+            // 清除所有旧样式
+            card.style.zIndex = "";
+            card.style.opacity = "";
             
-            <!-- Index 0 (左边) -->
-            <div class="cf-card" onclick="clickCard(0)">
-                <div class="cf-overlay"></div>
-                <img src="images/1.jpg">
-            </div>
+            const overlay = card.querySelector('.cf-overlay');
+            overlay.style.opacity = 0; // 默认不黑
 
-            <!-- Index 1 (默认C位，你的第二张图) -->
-            <div class="cf-card" onclick="clickCard(1)">
-                <div class="cf-overlay"></div>
-                <img src="images/2.jpg">
-            </div>
+            // 计算距离中心的差值
+            const offset = index - activeIndex;
 
-            <!-- Index 2 (右边) -->
-            <div class="cf-card" onclick="clickCard(2)">
-                <div class="cf-overlay"></div>
-                <img src="images/3.jpg">
-            </div>
-
-            <!-- Index 3 -->
-            <div class="cf-card" onclick="clickCard(3)">
-                <div class="cf-overlay"></div>
-                <img src="images/4.jpg">
-            </div>
-
-            <!-- Index 4 -->
-            <div class="cf-card" onclick="clickCard(4)">
-                <div class="cf-overlay"></div>
-                <img src="images/5.jpg">
-            </div>
-
-            <!-- Index 5 -->
-            <div class="cf-card" onclick="clickCard(5)">
-                <div class="cf-overlay"></div>
-                <img src="images/6.jpg">
-            </div>
-        </div>
-
-        <div class="cf-controls">
-            <button class="btn-control" onclick="shiftFlow(-1)">Prev</button>
-            <button class="btn-control" onclick="shiftFlow(1)">Next</button>
-        </div>
-    </section>
-
-    <!-- Projects 区域 -->
-    <section id="projects">
-        <div style="text-align: center; margin-bottom: 60px;">
-            <h2 style="font-size: 2.5rem; color: var(--accent-color);">Projects</h2>
-        </div>
-        <div class="project-item">
-            <div class="p-img" style="background-image: url('images/p1.jpg');"></div>
-            <div class="p-info">
-                <h3>Project A</h3>
-                <p>Specific project description goes here.</p>
-            </div>
-        </div>
-        <div class="project-item" style="flex-direction: row-reverse;">
-            <div class="p-img" style="background-image: url('images/p2.jpg');"></div>
-            <div class="p-info">
-                <h3>Project B</h3>
-                <p>Another project description goes here.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- 二级显示弹窗 -->
-    <div id="lightbox" class="lightbox-modal" onclick="closeLightbox()">
-        <span class="close-btn">&times;</span>
-        <img class="lightbox-content" id="lightbox-img">
-    </div>
-
-    <script>
-        // --- Cover Flow 逻辑 ---
-        const cards = document.querySelectorAll('.cf-card');
-        
-        // 核心：设置当前显示的图片索引
-        // 0是第一张，1是第二张
-        // 你要求“其实照片是我的第二张照片”，所以这里设为 1
-        let activeIndex = 1; 
-
-        function updateCoverFlow() {
-            cards.forEach((card, index) => {
-                // 清除所有旧样式
-                card.style.zIndex = "";
-                card.style.opacity = "";
-                
-                const overlay = card.querySelector('.cf-overlay');
-                overlay.style.opacity = 0; // 默认不黑
-
-                // 计算距离中心的差值
-                const offset = index - activeIndex;
-
-                // --- 中间那张 (C位) ---
-                if (index === activeIndex) {
-                    // 不旋转，放得最大，Z轴最靠前
-                    card.style.transform = `translateX(0) translateZ(200px) rotateY(0deg)`;
-                    card.style.zIndex = 100; // 在最前面
-                    card.style.filter = "brightness(1.1)"; // 稍微亮一点
-                } 
-                // --- 左边的图片 ---
-                else if (index < activeIndex) {
-                    // 向左平移 (offset * 间隔)，向右旋转 (60度)
-                    // 使用 translateZ(-200px) 把它推到后面去
-                    card.style.transform = `translateX(${offset * 220}px) translateZ(-200px) rotateY(60deg)`;
-                    card.style.zIndex = 10 + index; // 越靠近中间层级越高
-                    overlay.style.opacity = 0.4; // 稍微变暗
-                } 
-                // --- 右边的图片 ---
-                else {
-                    // 向右平移，向左旋转 (-60度)
-                    card.style.transform = `translateX(${offset * 220}px) translateZ(-200px) rotateY(-60deg)`;
-                    card.style.zIndex = 10 + (cards.length - index); // 越靠近中间层级越高
-                    overlay.style.opacity = 0.4;
-                }
-            });
-        }
-
-        // 初始化
-        updateCoverFlow();
-
-        // 按钮切换
-        function shiftFlow(dir) {
-            const newIndex = activeIndex + dir;
-            // 边界检查：不要超出去
-            if (newIndex >= 0 && newIndex < cards.length) {
-                activeIndex = newIndex;
-                updateCoverFlow();
-            }
-        }
-
-        // 点击卡片逻辑
-        function clickCard(index) {
+            // --- 中间那张 (C位) ---
             if (index === activeIndex) {
-                // 如果点的是已经在中间的图 -> 打开大图
-                const imgUrl = cards[index].querySelector('img').src;
-                openLightbox(imgUrl);
-            } else {
-                // 如果点的是旁边的图 -> 把它转到中间
-                activeIndex = index;
-                updateCoverFlow();
+                // 不旋转，放得最大，Z轴最靠前
+                card.style.transform = `translateX(0) translateZ(200px) rotateY(0deg)`;
+                card.style.zIndex = 100; // 在最前面
+                card.style.filter = "brightness(1.1)"; // 稍微亮一点
+            } 
+            // --- 左边的图片 ---
+            else if (index < activeIndex) {
+                // 向左平移 (offset * 间隔)，向右旋转 (60度)
+                // 使用 translateZ(-200px) 把它推到后面去
+                card.style.transform = `translateX(${offset * 220}px) translateZ(-200px) rotateY(60deg)`;
+                card.style.zIndex = 10 + index; // 越靠近中间层级越高
+                overlay.style.opacity = 0.4; // 稍微变暗
+            } 
+            // --- 右边的图片 ---
+            else {
+                // 向右平移，向左旋转 (-60度)
+                card.style.transform = `translateX(${offset * 220}px) translateZ(-200px) rotateY(-60deg)`;
+                card.style.zIndex = 10 + (cards.length - index); // 越靠近中间层级越高
+                overlay.style.opacity = 0.4;
             }
-        }
+        });
+    }
 
-        // --- 二级显示 (Lightbox) ---
-        const lightbox = document.getElementById('lightbox');
-        const lightboxImg = document.getElementById('lightbox-img');
+    // 初始化
+    updateCoverFlow();
 
-        function openLightbox(src) {
-            lightboxImg.src = src;
-            lightbox.classList.add('active');
+    // 按钮切换
+    function shiftFlow(dir) {
+        const newIndex = activeIndex + dir;
+        // 边界检查：不要超出去
+        if (newIndex >= 0 && newIndex < cards.length) {
+            activeIndex = newIndex;
+            updateCoverFlow();
         }
+    }
 
-        function closeLightbox() {
-            lightbox.classList.remove('active');
+    // 点击卡片逻辑
+    function clickCard(index) {
+        if (index === activeIndex) {
+            // 如果点的是已经在中间的图 -> 打开大图
+            const imgUrl = cards[index].querySelector('img').src;
+            openLightbox(imgUrl);
+        } else {
+            // 如果点的是旁边的图 -> 把它转到中间
+            activeIndex = index;
+            updateCoverFlow();
         }
-    </script>
-</body>
-</html>
+    }
+
+    // --- 二级显示 (Lightbox) ---
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+
+    function openLightbox(src) {
+        lightboxImg.src = src;
+        lightbox.classList.add('active');
+    }
+
+    function closeLightbox() {
+        lightbox.classList.remove('active');
+    }
+</script>

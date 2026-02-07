@@ -121,9 +121,42 @@
 
         /* --- 5. Projects 样式 --- */
         #projects { padding: 100px 5%; }
-        .project-item { display: flex; gap: 50px; margin-bottom: 100px; align-items: center; }
-        .p-img { flex: 1; height: 350px; background-size: cover; border-radius: 8px; }
+        
+        .project-item { 
+            display: flex; 
+            gap: 60px;       /* 增加一点图片和文字的间距 */
+            margin-bottom: 120px; 
+            align-items: center; /* 保持垂直居中 */
+        }
+
+        .p-img { 
+            flex: 1; 
+            height: 350px;   /* 图片高度保持不变 */
+            background-size: cover; 
+            background-position: center;
+            border-radius: 8px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
         .p-info { flex: 1; }
+
+        /* --- 新增：针对 Project 标题的巨大化调整 --- */
+        .p-info h3 {
+            font-size: 4.5rem;    /* 核心修改：极大字号，视觉上接近图片一半 */
+            font-weight: 800;     /* 加粗，增强艺术感 */
+            line-height: 1.1;     /* 行高收紧，避免太散 */
+            margin-bottom: 25px;  /* 标题与副标题的距离 */
+            letter-spacing: -1px; /* 稍微紧凑一点的字间距，显得更现代 */
+            color: #fff;          /* 保持白色，或者改成 var(--accent-color) */
+        }
+
+        /* --- 新增：针对副标题的调整 --- */
+        .p-info p {
+            font-size: 1.4rem;    /* 副标题也按比例放大 */
+            color: #ccc;          /* 稍微灰一点，形成层次 */
+            line-height: 1.6;     /* 易读性 */
+            max-width: 90%;       /* 防止文字太长一行读不完 */
+        }
 
 
         /* --- 6. 二级显示 (Lightbox) --- */

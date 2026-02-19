@@ -190,7 +190,7 @@
     <section id="photojournal">
         <div class="pj-header">
             <h2 class="pj-title">Photo Journal</h2>
-            <span class="pj-date">Feb 13</span>
+            <span class="pj-date">Feb 28</span>
         </div>
 
         <div class="coverflow-scene" id="scene">
@@ -259,11 +259,11 @@
     <div id="lightbox" class="lightbox-modal" onclick="closeLightbox()">
         <span class="close-btn">&times;</span>
         
-        <!-- 新增：左右切换按钮 -->
+        <!-- 左右切换按钮 -->
         <span class="nav-btn prev-btn" onclick="navigateLightbox(event, -1)">&#10094;</span>
         <span class="nav-btn next-btn" onclick="navigateLightbox(event, 1)">&#10095;</span>
         
-        <!-- 补充了阻止事件冒泡，防止点到图片中间意外关闭 -->
+        <!-- 阻止事件冒泡，防止点到图片中间意外关闭 -->
         <img class="lightbox-content" id="lightbox-img" onclick="event.stopPropagation()">
     </div>
 
@@ -327,7 +327,7 @@
 
         function openLightbox(index) {
             currentLightboxIndex = index;
-            // 获取对应索引的图片路径展示
+            // 【修复点 1】：加上了 准确定位图片
             lightboxImg.src = cards.querySelector('img').src;
             lightbox.classList.add('active');
         }
@@ -336,7 +336,7 @@
             lightbox.classList.remove('active');
         }
 
-        // --- 新增：沉浸模式下的左右切换 ---
+        // --- 沉浸模式下的左右切换 ---
         function navigateLightbox(event, direction) {
             // 阻止事件冒泡，防止点击按钮时触发外层的 closeLightbox()
             if (event) event.stopPropagation(); 
@@ -350,11 +350,11 @@
                 currentLightboxIndex = 0;
             }
 
-            // 更新弹窗中的图片源
+            // 【修复点 2】：加上了 准确定位下一张图片
             lightboxImg.src = cards.querySelector('img').src;
         }
 
-        // --- 新增：支持键盘快捷键 (方向键左右切换、ESC退出) ---
+        // --- 支持键盘快捷键 (方向键左右切换、ESC退出) ---
         document.addEventListener('keydown', function(event) {
             if (lightbox.classList.contains('active')) {
                 if (event.key === 'ArrowLeft') {

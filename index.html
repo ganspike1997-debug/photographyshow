@@ -146,6 +146,25 @@
         .lightbox-modal.active { display: flex; opacity: 1; }
         .lightbox-content { max-width: 90%; max-height: 90vh; border: 2px solid var(--accent-color); }
         .close-btn { position: absolute; top: 30px; right: 40px; color: #fff; font-size: 50px; cursor: pointer; }
+
+        /* --- 新增：Lightbox 左右切换按钮 --- */
+        .lb-nav{
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.35);
+            border: 1px solid rgba(255,255,255,0.25);
+            color: #fff;
+            font-size: 40px;
+            padding: 12px 18px;
+            border-radius: 999px;
+            cursor: pointer;
+            transition: 0.2s;
+            user-select: none;
+        }
+        .lb-nav:hover{ border-color: var(--accent-color); color: var(--accent-color); }
+        .lb-prev{ left: 30px; }
+        .lb-next{ right: 30px; }
     </style>
 </head>
 <body>
@@ -211,7 +230,7 @@
         </div>
     </section>
 
-    <!-- Projects 区域 (已补充 HTML 结构以展示大字体效果) -->
+    <!-- Projects 区域 -->
     <section id="projects">
         <div class="project-item">
             <!-- 图片区域 -->
@@ -234,10 +253,17 @@
         </div>
     </section>
 
-    <!-- 二级显示弹窗 -->
+    <!-- 二级显示弹窗（已支持左右切换 + 滑动） -->
     <div id="lightbox" class="lightbox-modal" onclick="closeLightbox()">
         <span class="close-btn">&times;</span>
-        <img class="lightbox-content" id="lightbox-img">
+
+        <!-- 左右按钮：阻止冒泡避免触发关闭 -->
+        <button class="lb-nav lb-prev" onclick="event.stopPropagation(); lightboxPrev()">&#10094;</button>
+
+        <!-- 图片：阻止冒泡避免点图关闭 -->
+        <img class="lightbox-content" id="lightbox-img" onclick="event.stopPropagation();">
+
+        <button class="lb-nav lb-next" onclick="event.stopPropagation(); lightboxNext()">&#10095;</button>
     </div>
 
     <script>
@@ -285,26 +311,74 @@
 
         function clickCard(index) {
             if (index === activeIndex) {
-                const imgUrl = cards[index].querySelector('img').src;
-                openLightbox(imgUrl);
+                openLightboxByIndex(activeIndex);
             } else {
                 activeIndex = index;
                 updateCoverFlow();
             }
         }
 
-        // --- 二级显示 (Lightbox) ---
+        // --- Lightbox：打开/关闭 + 左右切换 + 键盘 + 触屏滑动 ---
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = document.getElementById('lightbox-img');
 
-        function openLightbox(src) {
-            lightboxImg.src = src;
+        function openLightboxByIndex(index) {
+            const imgUrl = cards[index].querySelector('img').src;
+            lightboxImg.src = imgUrl;
             lightbox.classList.add('active');
         }
 
         function closeLightbox() {
             lightbox.classList.remove('active');
         }
+
+        function lightboxPrev() {
+            if (!lightbox.classList.contains('active')) return;
+            activeIndex = (activeIndex - 1 + cards.length) % cards.length;
+            updateCoverFlow();
+            openLightboxByIndex(activeIndex);
+        }
+
+        function lightboxNext() {
+            if (!lightbox.classList.contains('active')) return;
+            activeIndex = (activeIndex + 1) % cards.length;
+            updateCoverFlow();
+            openLightboxByIndex(activeIndex);
+        }
+
+        // 键盘左右键 / ESC
+        document.addEventListener('keydown', (e) => {
+            if (!lightbox.classList.contains('active')) return;
+            if (e.key === 'ArrowLeft') lightboxPrev();
+            if (e.key === 'ArrowRight') lightboxNext();
+            if (e.key === 'Escape') closeLightbox();
+        });
+
+        // 触屏左右滑（在 lightbox 上滑动）
+        let touchStartX = 0;
+        let touchStartY = 0;
+        const SWIPE_THRESHOLD = 50;
+
+        lightbox.addEventListener('touchstart', (e) => {
+            if (!lightbox.classList.contains('active')) return;
+            const t = e.touches[0];
+            touchStartX = t.clientX;
+            touchStartY = t.clientY;
+        }, { passive: true });
+
+        lightbox.addEventListener('touchend', (e) => {
+            if (!lightbox.classList.contains('active')) return;
+
+            const t = e.changedTouches[0];
+            const dx = t.clientX - touchStartX;
+            const dy = t.clientY - touchStartY;
+
+            // 横向滑动优先，避免上下滚动误判
+            if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > SWIPE_THRESHOLD) {
+                if (dx > 0) lightboxPrev();   // 右滑：上一张
+                else lightboxNext();          // 左滑：下一张
+            }
+        }, { passive: true });
     </script>
 </body>
 </html>

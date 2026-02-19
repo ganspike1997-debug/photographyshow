@@ -148,7 +148,7 @@
         .close-btn { position: absolute; top: 30px; right: 40px; color: #fff; font-size: 50px; cursor: pointer; z-index: 10000; transition: 0.3s; }
         .close-btn:hover { color: var(--accent-color); }
 
-        /* 新增：Lightbox 左右导航按钮样式 */
+        /* Lightbox 左右导航按钮样式 */
         .nav-btn {
             position: absolute;
             top: 50%;
@@ -190,7 +190,7 @@
     <section id="photojournal">
         <div class="pj-header">
             <h2 class="pj-title">Photo Journal</h2>
-            <span class="pj-date">Feb 2008</span>
+            <span class="pj-date">Feb 2118</span>
         </div>
 
         <div class="coverflow-scene" id="scene">
@@ -235,9 +235,7 @@
     <!-- Projects 区域 -->
     <section id="projects">
         <div class="project-item">
-            <!-- 图片区域 -->
             <div class="p-img" style="background-image: url('images/p1.jpg');"></div>
-            <!-- 文字区域 -->
             <div class="p-info">
                 <h3>Urban Soul</h3>
                 <p>Capturing the silent moments in a busy city.</p>
@@ -245,9 +243,7 @@
         </div>
 
         <div class="project-item" style="flex-direction: row-reverse;">
-            <!-- 图片区域 -->
             <div class="p-img" style="background-image: url('images/p2.jpg');"></div>
-            <!-- 文字区域 -->
             <div class="p-info">
                 <h3>Neon Nights</h3>
                 <p>Exploring the color palette of midnight streets.</p>
@@ -255,7 +251,7 @@
         </div>
     </section>
 
-    <!-- 二级显示弹窗 (更新：加入了左右切换按钮及防误触机制) -->
+    <!-- 二级显示弹窗 -->
     <div id="lightbox" class="lightbox-modal" onclick="closeLightbox()">
         <span class="close-btn">&times;</span>
         
@@ -312,7 +308,6 @@
 
         function clickCard(index) {
             if (index === activeIndex) {
-                // 修改：传入对应的图片索引
                 openLightbox(index);
             } else {
                 activeIndex = index;
@@ -327,7 +322,7 @@
 
         function openLightbox(index) {
             currentLightboxIndex = index;
-            // 【修复点 1】：加上了 准确定位图片
+            // 【重点修复】：cards是数组，必须加上 才能定位到某一张卡片
             lightboxImg.src = cards.querySelector('img').src;
             lightbox.classList.add('active');
         }
@@ -343,14 +338,14 @@
 
             currentLightboxIndex += direction;
 
-            // 循环切换逻辑：到最前或最后实现无缝循环
+            // 循环切换逻辑
             if (currentLightboxIndex < 0) {
                 currentLightboxIndex = cards.length - 1;
             } else if (currentLightboxIndex >= cards.length) {
                 currentLightboxIndex = 0;
             }
 
-            // 【修复点 2】：加上了 准确定位下一张图片
+            // 【重点修复】：同样加上了
             lightboxImg.src = cards.querySelector('img').src;
         }
 
@@ -368,4 +363,4 @@
         });
     </script>
 </body>
-</html>F
+</html>

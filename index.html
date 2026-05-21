@@ -380,6 +380,41 @@
       </div>
     </div>
 
+    <!-- ===== 模块 6：May 15（27~31）===== -->
+    <div class="pj-block" data-group="may15">
+      <div class="pj-header">
+        <span class="pj-date">May 15</span>
+      </div>
+
+      <div class="coverflow-scene" id="scene-may15">
+        <div class="cf-card" data-group="may15" data-index="0">
+          <div class="cf-overlay"></div>
+          <img src="images/27.jpg" alt="img27" />
+        </div>
+        <div class="cf-card" data-group="may15" data-index="1">
+          <div class="cf-overlay"></div>
+          <img src="images/28.jpg" alt="img28" />
+        </div>
+        <div class="cf-card" data-group="may15" data-index="2">
+          <div class="cf-overlay"></div>
+          <img src="images/29.jpg" alt="img29" />
+        </div>
+        <div class="cf-card" data-group="may15" data-index="3">
+          <div class="cf-overlay"></div>
+          <img src="images/30.jpg" alt="img30" />
+        </div>
+        <div class="cf-card" data-group="may15" data-index="4">
+          <div class="cf-overlay"></div>
+          <img src="images/31.jpg" alt="img31" />
+        </div>
+      </div>
+
+      <div class="cf-controls">
+        <button class="btn-control" onclick="shiftFlow('may15', -1)">Prev</button>
+        <button class="btn-control" onclick="shiftFlow('may15', 1)">Next</button>
+      </div>
+    </div>
+
   </section>
 
   <!-- Projects 区域 -->
@@ -407,6 +442,19 @@
       <div class="p-info">
         <h3>White Paper</h3>
         <p>A curated visual research project presented as a ten-image sequence.</p>
+      </div>
+    </div>
+
+    <div class="project-item">
+      <!-- ✅ Click this image to open Pointgrey Photo lightbox (pointgrey1~5) -->
+      <div class="p-img"
+           style="background-image: url('images/pointgrey1.jpg');"
+           onclick="openProjectLightbox('pointgrey', 0); event.stopPropagation();">
+      </div>
+
+      <div class="p-info">
+        <h3>Pointgrey photo</h3>
+        <p>A Point Grey photo sequence exploring coastline, light, and quiet urban edges.</p>
       </div>
     </div>
 
@@ -530,6 +578,13 @@
         "images/whitepaper9.jpg",
         "images/whitepaper10.jpg"
       ],
+      pointgrey: [
+        "images/pointgrey1.jpg",
+        "images/pointgrey2.jpg",
+        "images/pointgrey3.jpg",
+        "images/pointgrey4.jpg",
+        "images/pointgrey5.jpg"
+      ],
     };
 
     let currentProjectIndex = 0;
@@ -620,6 +675,7 @@
     initGroup("mar13");
     initGroup("apr17");
     initGroup("may1");  // Initialize the new May 1st group
+    initGroup("may15");
   </script>
 </body>
 </html>

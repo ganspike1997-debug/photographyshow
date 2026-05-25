@@ -459,6 +459,19 @@
     </div>
 
     <div class="project-item" style="flex-direction: row-reverse;">
+      <!-- ✅ Click this image to open Shadow lightbox (shadow1~10) -->
+      <div class="p-img"
+           style="background-image: url('images/shadow1.jpg');"
+           onclick="openProjectLightbox('shadow', 0); event.stopPropagation();">
+      </div>
+
+      <div class="p-info">
+        <h3>Shadow</h3>
+        <p>A ten-image study of shadow, contrast, and the quiet tension between light and darkness.</p>
+      </div>
+    </div>
+
+    <div class="project-item" style="flex-direction: row-reverse;">
       <div class="p-img" style="background-image: url('images/p2.jpg');"></div>
       <div class="p-info">
         <h3>Neon Nights</h3>
@@ -585,6 +598,13 @@
         "images/pointgrey4.jpg",
         "images/pointgrey5.jpg"
       ],
+      shadow: [
+        "images/shadow1.jpg",
+        "images/shadow2.jpg",
+        "images/shadow3.jpg",
+        "images/shadow4.jpg",
+        "images/shadow5.jpg",
+        ],
     };
 
     let currentProjectIndex = 0;
